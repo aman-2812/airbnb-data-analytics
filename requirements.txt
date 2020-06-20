@@ -1,0 +1,10 @@
+flask~=1.1.2
+flask-sqlalchemy
+mysqlclient
+flask_marshmallow
+marshmallow~=3.6.1
+dash_table
+flask-marshmallow
+
+pandas~=1.0.4
+dash~=1.12.0
