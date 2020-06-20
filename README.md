@@ -7,6 +7,7 @@ using Dash Framework.
  Airbnb offers arrangement for lodging, primarily homestays, or tourism experiences.
  
 **About the Dataset**
+
  The Data Set used here is a `listings_details.csv` file that has information about the 
  properties listed on Airbnb in Amsterdam, Netherlands. This file downlaoded from insideairbnb.com 
  gives a snapshot of the Amsterdam situation on December 6th, 2018.
