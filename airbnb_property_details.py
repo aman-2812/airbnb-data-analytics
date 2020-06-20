@@ -13,7 +13,7 @@ df.head()
 
 external_stylesheets = ['https://www.w3schools.com/w3css/4/w3.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets, routes_pathname_prefix="/airbnb-property/")
 
 # changing price to float
 df['price_num'] = df['price'].replace('\$', '', regex=True).astype(str)
@@ -72,7 +72,7 @@ app.layout = html.Div([
                 allowCross=False,
                 min=0,
                 max=4000,
-                step=200,
+                step=1,
                 value=[0, 4000],
                 marks={
                     0: '0',
