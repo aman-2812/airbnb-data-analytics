@@ -20,19 +20,20 @@ using Dash Framework.
 
 2) Install the requirements from the `requirement.txt` file in the root dir.
 
-3) Execute the following python scripts.
+3) Execute the following python script.
+      * Execute the script `airbnb_property_details.py` to view the property details page.
+        Access the property details page on http://127.0.0.1:5000/property-details.
+        
+         The Airbnb Property Dashboards is a web portal where you can view all the properties and
+         filter them according to your needs. It contains the detailed information of each porperty.
+         Just click on the property on the map to view details.
+        
+         ![Sample Image](images/properties-demo.png)
  
-      * Execute the script `airbnb_analytics.py` to view the analytics dashboard.
-         Visit `http://127.0.0.1:7000/airbnb-analytics/` to view your dashboard.
+      * Now to view analytics dashboard click on the link `View Airbnb Analytics` below the page heading or
+        visit http://127.0.0.1:5000/analytics to view your dashboard.
      
          The Analytics Dashboards contains the visual representation of Airbnb data.
         
-         ![Sample Image](images/analytics-demo.PNG)
+         ![Sample Image](images/analytics-demo.png)
     
-      * Execute the script `airbnb_property_details.py` to view the property details dashboard.
-         Visit `http://127.0.0.1:5000/airbnb-property/` to view your dashboard.
-     
-         The Airbnb Property Dashboards is a web portal where you can view all the properties and
-         filter them according to your needs. It contains the detailed information of each porperty.
-        
-         ![Sample Image](images/properties-demo.PNG)
