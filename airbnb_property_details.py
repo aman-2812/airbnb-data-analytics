@@ -8,17 +8,20 @@ import pandas as pd
 import plotly.express as px
 from dash.dependencies import Input, Output
 
+import layout
+
 df = pd.read_csv('listings_details.csv')
 df.head()
 
 external_stylesheets = ['https://www.w3schools.com/w3css/4/w3.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets, routes_pathname_prefix="/airbnb-property/")
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app.config.suppress_callback_exceptions = True
+app.title = "AirBnb Analytics"
 
 # changing price to float
 df['price_num'] = df['price'].replace('\$', '', regex=True).astype(str)
 df['price_num'] = df['price_num'].replace('\,', '', regex=True).astype(float)
-
 
 hosts = df[
     ['host_id', 'host_name', 'host_url', 'host_since', 'host_about', 'host_response_time', 'host_response_rate',
@@ -32,7 +35,6 @@ for i in range(len(hosts)):
             'value': i
         }
     )
-
 
 # property_type by location
 property_by_type_fig = px.scatter_mapbox(df,
@@ -59,60 +61,12 @@ property_type_count_figure.update_traces(textposition='outside')
 # Rating by price
 avg_rating_fig = px.bar(df, x='property_type', y='review_scores_rating')
 
-app.layout = html.Div([
-    html.Div([
-        html.P("Welcome to Airbnb", className="w3-xxxlarge")
-    ], className="w3-container w3-black w3-center"),
-    html.Br(),
-    html.Div([
-        html.Div([
-            html.P(" Set Price Range (in US Dollars (USD))"),
-            dcc.RangeSlider(
-                id='price-range-slider',
-                allowCross=False,
-                min=0,
-                max=4000,
-                step=1,
-                value=[0, 4000],
-                marks={
-                    0: '0',
-                    200: '200',
-                    400: '400',
-                    600: '600',
-                    800: '800',
-                    1000: '1000',
-                    2000: '2000',
-                    4000: '4000'
-                }
-            ),
-            html.P(id="selected_price"),
-        ], className="w3-full w3-container w3-sand"),
-    ], className="w3-row w3-border"),
-    html.Div([
-        html.Div(dcc.Graph(id='property_by_type', figure=property_by_type_fig), className="w3-container w3-half"),
-        html.Div(dcc.Graph(id='room_by_type', figure=room_type_fig), className="w3-container w3-half")
-    ], className="w3-row w3-border"),
-    dcc.Graph(id='property_type_count', figure=property_type_count_figure, style={"width": "100%"}),
-    html.Div(id='property-details-container', style={"width": "100%"}),
-html.H3('Host Details', className='w3-center'),
-    html.Div([
-        html.Div([
-            dcc.Dropdown(
-                id='host',
-                options=host_options,
-                value=hosts.iloc[0]['host_id']
-            ),
-            html.Img(id='host_img', src=hosts.iloc[0]['host_picture_url'], style={
-                'border-radius': '4px',
-                'padding': '4px',
-                'width': '450px',
-                'height': '450px',
-                'background-image': 'url(https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png)',
-            }, className='w3-round'),
-        ], className='w3-col m4'),
-        html.Div(id='host-details', className='w3-col m8')
-    ], className='w3-row w-border')
-], style={"height": "80vh", "width": "100%"})
+url_bar_and_content_div = html.Div([
+    dcc.Location(id='url', refresh=False),
+    html.Div(id='page-content')
+])
+
+app.layout = url_bar_and_content_div
 
 
 @app.callback(
@@ -215,6 +169,7 @@ def get_property_details(property_clickData, room_clickData):
             ], className="w3-card-4"
         )
 
+
 @app.callback([Output('host_img', 'src'),
                Output('host-details', 'children')],
               [Input('host', 'value')])
@@ -257,6 +212,17 @@ def get_host_details(index):
                    style_table={'overflowX': 'auto'}
                )
            ], className='w3-card w3-margin w3-padding')
+
+
+@app.callback(dash.dependencies.Output('page-content', 'children'),
+              [dash.dependencies.Input('url', 'pathname')])
+def display_page(pathname):
+    if pathname == "/analytics":
+        return layout.PROPERTY_ANALYTICS
+    if pathname == "/property-details":
+        return layout.PROPERTY_DETAILS
+    return layout.PROPERTY_DETAILS
+
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=5000)

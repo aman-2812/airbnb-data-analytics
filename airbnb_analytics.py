@@ -28,18 +28,5 @@ price_by_rating_fig = px.bar(avg_rating_df, title="Average Customer Rating of Ea
                              y='price_num', text='price_num')
 
 # 3D bed vs price vs rating
-bed_price_rating_fig = px.scatter_3d(df, x=df['review_scores_rating'], y=df['price_num'], z=df['beds'],
-                                     color=df['property_type'], symbol=df['room_type'])
-
-app.layout = html.Div([
-    html.Div([
-        html.P("Welcome to Airbnb Analytics", className="w3-xxxlarge")
-    ], className="w3-container w3-black w3-center"),
-    html.Br(),
-    dcc.Graph(id='property_type_avg', figure=avg_rating_fig, style={"width": "100%"}),
-    dcc.Graph(id='price_by_rating', figure=price_by_rating_fig, style={"width": "100%"}),
-    dcc.Graph(id='3d_bed_price_rating', figure=bed_price_rating_fig, style={"width": "100%"}),
-], style={"height": "80vh", "width": "100%"})
-
-if __name__ == '__main__':
-    app.run_server(debug=True, port=7000)
+bed_price_rating_fig = px.scatter_3d(df, title="Number of Beds vs Price vs Average Rating", x=df['review_scores_rating'],
+                                     y=df['price_num'], z=df['beds'], color=df['property_type'], symbol=df['room_type'])
