@@ -1,0 +1,21 @@
+apiVersion: skaffold/v1
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: airbnb-analytic-app
+    context: airbnb-analytic-app/
+  local:
+    push: false
+    useDockerCLI: true
+    useBuildkit: true
+profiles:
+  - name: dev
+    deploy:
+      helm:
+        releases:
+          - name: airbnb-analytics
+            chartPath: deployment/airbnb-analytic-app/helm
+            values:
+              image: airbnb-analytic-app
