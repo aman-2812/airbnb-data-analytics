@@ -1,2 +1,2 @@
 replicas: 1
-image: streaming-etl
+image: airbnb-analytics-app
