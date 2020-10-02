@@ -1,0 +1,10 @@
+flask~=1.1.2
+flask_marshmallow
+marshmallow~=3.6.1
+flask-marshmallow
+dash-table==4.7.0
+pandas~=1.0.4
+dash~=1.12.0
+dash_bootstrap_components==0.8.3
+dash-core-components==1.10.0
+dash-html-components==1.0.3

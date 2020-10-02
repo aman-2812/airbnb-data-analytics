@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airbnb-analytics
+  labels:
+    app: airbnb-analytics
+spec:
+  replicas: {{ .Values.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: airbnb-analytics
+  template:
+    metadata:
+      labels:
+        app: airbnb-analytics
+    spec:
+      containers:
+        - name: airbnb-analytics
+          image: {{ .Values.image }}
+          imagePullPolicy: Never
